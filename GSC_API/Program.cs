@@ -1,18 +1,22 @@
-﻿using AutoMapper;
-using GSC_API.Configuration;
+﻿using GSC_API.Configuration;
 using GSC_API.DataAccess;
 using GSC_API.Handlers;
 using GSC_API.Protos;
 using GSC_API.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+builder.Services.AddControllers()
+.AddJsonOptions(x =>
+{
+    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});
 
 builder.Services.AddScoped<PersonRepository>();
 builder.Services.AddScoped<CategoryRepository>();
@@ -57,7 +61,7 @@ builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JWT"));
 
 builder.Services.AddScoped<IJwtHandler, JwtHandler>();
 
-builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.AddGrpc();
 builder.Services.AddGrpcReflection();
 

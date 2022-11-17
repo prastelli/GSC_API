@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using GSC_API.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace GSC_API.Models
 {
@@ -8,6 +9,6 @@ namespace GSC_API.Models
         [Required(ErrorMessage = "Description es obligatorio.")]
         [MaxLength(20, ErrorMessage = "El nombre solo puede tener 20 caracteres.")]
         public string Description { get; set; }
-        public DateTime CreationDate { get; set; } = DateTime.Now;
+
     }
 }

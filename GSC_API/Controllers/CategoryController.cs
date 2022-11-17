@@ -19,10 +19,10 @@ namespace GSC_API.Controllers
         public IActionResult Index()
         {
             var category = _categoryRepository.GetAll();
-            var categoryviewmodel = _mapper.Map<CategoryViewModel>(category);
+           List<CategoryViewModel> categoryviewmodel = _mapper.Map<List<CategoryViewModel>>(category);
             return View(categoryviewmodel);
         }
-        public IActionResult Create() //Que raro que es este controller verdad?
+        public IActionResult Create()
         {
             return View();
         }
@@ -88,7 +88,7 @@ namespace GSC_API.Controllers
     
         public  IActionResult Delete(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return BadRequest();
             }
