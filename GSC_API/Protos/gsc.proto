@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option csharp_namespace = "GSC_API.Protos";
+
+service Loan {
+	rpc CloseLoan(LoanRequest) returns (LoanResponse);
+}
+
+message LoanRequest{
+	int32 id = 1;
+}
+
+message LoanResponse {
+	string respuesta = 1;
+}
+
