@@ -45,6 +45,9 @@ namespace GSC_API.Utils
             CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<Category, CategoryDTO>();
 
+            CreateMap<Category, CategoryViewModel>().ReverseMap();
+            CreateMap<Category, CategoryViewModel>();
+
         }
     }
 }

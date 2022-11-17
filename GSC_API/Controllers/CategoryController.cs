@@ -2,6 +2,7 @@
 using GSC_API.DataAccess;
 using GSC_API.Dto;
 using GSC_API.Entities;
+using GSC_API.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GSC_API.Controllers
@@ -18,7 +19,8 @@ namespace GSC_API.Controllers
         public IActionResult Index()
         {
             var category = _categoryRepository.GetAll();
-            return View(category);
+            var categoryviewmodel = _mapper.Map<CategoryViewModel>(category);
+            return View(categoryviewmodel);
         }
         public IActionResult Create() //Que raro que es este controller verdad?
         {
