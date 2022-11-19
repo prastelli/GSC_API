@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
 using GSC_API.Dto;
 using GSC_API.Entities;
+using GSC_API.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace GSC_API.DataAccess
 {
@@ -15,7 +19,7 @@ namespace GSC_API.DataAccess
             _context = context;
             _mapper = mapper;
         }
-        public Category Add(CategoryDTO entity)
+        public Category Add(CategoryViewModel entity)
         {
             var Category = _mapper.Map<Category>(entity);
             var savedEntity = _context.Categories.Add(Category);
@@ -54,6 +58,27 @@ namespace GSC_API.DataAccess
         {
             _context.Entry(entity).State = EntityState.Modified;
             _context.SaveChanges();
+        }
+
+        public List<SelectListItem> GetListItems()
+        {
+            var lsiCategories = new List<SelectListItem>();
+            var categories = GetAll();
+            lsiCategories = categories.Select(cat => new SelectListItem()
+            {
+                Text = cat.Description,
+                Value = cat.Id.ToString()
+            }).ToList();
+
+            var dfiCategories = new SelectListItem()
+            {
+                Text = " Select Categorie",
+                Value = ""
+            };
+
+            lsiCategories.Insert(0, dfiCategories);
+
+            return lsiCategories;
         }
     }
 }

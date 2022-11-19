@@ -71,7 +71,8 @@ namespace GSC_API.Utils
                     dest => dest.Description,
                     opt => opt.MapFrom(src => src.Description
                 ));
-
+            CreateMap<Thing, ThingsViewModel>().ReverseMap();
+            CreateMap<Thing, ThingsViewModel>();
         }
     }
 }

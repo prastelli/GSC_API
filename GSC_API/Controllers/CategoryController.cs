@@ -9,9 +9,9 @@ namespace GSC_API.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly CategoryRepository _categoryRepository;
+        private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
-        public CategoryController(CategoryRepository categoryRepository, IMapper mapper) {
+        public CategoryController(ICategoryRepository categoryRepository, IMapper mapper) {
             _categoryRepository = categoryRepository;
             _mapper = mapper;
 
@@ -29,7 +29,7 @@ namespace GSC_API.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CategoryDTO category)
+        public IActionResult Create(CategoryViewModel category)
         {
             if (!ModelState.IsValid)
                 return View("Create", category);
@@ -44,7 +44,7 @@ namespace GSC_API.Controllers
                 return NotFound();
             }
 
-            var category = _categoryRepository.GetById(id.Value);
+            var category = _mapper.Map<CategoryViewModel>(_categoryRepository.GetById(id.Value));
             if (category == null)
             {
                 return NotFound();
@@ -52,8 +52,8 @@ namespace GSC_API.Controllers
             return View(category);
         }
         [HttpPost] 
-        [ValidateAntiForgeryToken] //Junto con el form TAG nos ayudan a prevenir XSRF/CSRF.
-        public IActionResult Edit(int id, Category entity)
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, CategoryViewModel entity)
         {
             if (id != entity.Id)
             {
@@ -62,7 +62,8 @@ namespace GSC_API.Controllers
 
             if (ModelState.IsValid)
             {
-                _categoryRepository.Update(entity);
+                var category = _mapper.Map<Category>(entity);
+                _categoryRepository.Update(category);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -75,7 +76,7 @@ namespace GSC_API.Controllers
                 return NotFound();
             }
 
-            var category = _categoryRepository.GetById(id.Value);
+            var category = _mapper.Map<CategoryViewModel>(_categoryRepository.GetById(id.Value));
             if (category == null)
             {
                 return NotFound();
@@ -93,7 +94,7 @@ namespace GSC_API.Controllers
                 return BadRequest();
             }
 
-            var category = _categoryRepository.GetById(id);
+            var category = _mapper.Map<CategoryViewModel>(_categoryRepository.GetById(id));
             if (category == null)
             {
                 return NotFound();

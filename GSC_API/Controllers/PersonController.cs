@@ -14,10 +14,10 @@ namespace GSC_API.Controllers
     public class PersonController : ControllerBase
     {
 
-        private readonly PersonRepository _personRepository;
+        private readonly IPersonRepository _personRepository;
         private IMapper _mapper;
 
-        public PersonController(PersonRepository personRepository,IMapper mapper)
+        public PersonController(IPersonRepository personRepository,IMapper mapper)
         {
             _personRepository = personRepository;
             _mapper = mapper;

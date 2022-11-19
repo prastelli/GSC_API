@@ -18,8 +18,9 @@ builder.Services.AddControllers()
     x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 });
 
-builder.Services.AddScoped<PersonRepository>();
-builder.Services.AddScoped<CategoryRepository>();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IThingRepository, ThingRepository>();
 
 builder.Services.AddDbContext<LoanDBContext>(options =>
 {
