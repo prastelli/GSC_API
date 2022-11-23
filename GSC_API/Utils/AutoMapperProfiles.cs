@@ -79,6 +79,9 @@ namespace GSC_API.Utils
 
             CreateMap<Rol, RolDTO>().ReverseMap();
             CreateMap<Rol, RolDTO>();
+
+            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, UserDto>();
         }
     }
 }
