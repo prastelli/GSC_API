@@ -77,6 +77,5 @@ namespace GSC_API.Controllers
             }
             return NotFound();
         }
-
     }
 }

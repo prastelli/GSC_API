@@ -73,6 +73,12 @@ namespace GSC_API.Utils
                 ));
             CreateMap<Thing, ThingsViewModel>().ReverseMap();
             CreateMap<Thing, ThingsViewModel>();
+
+            CreateMap<Rol, RolViewModel>().ReverseMap();
+            CreateMap<Rol, RolViewModel>();
+
+            CreateMap<Rol, RolDTO>().ReverseMap();
+            CreateMap<Rol, RolDTO>();
         }
     }
 }

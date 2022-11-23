@@ -6,6 +6,7 @@ using GSC_API.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -21,6 +22,7 @@ builder.Services.AddControllers()
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IThingRepository, ThingRepository>();
+builder.Services.AddScoped<IRolRepository, RolRepository>();
 
 builder.Services.AddDbContext<LoanDBContext>(options =>
 {
@@ -69,6 +71,39 @@ builder.Services.AddGrpcReflection();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                }
+            },
+            new List<string>()
+        }
+    });
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Description = "Bearer Authentication with JWT Token",
+        Type = SecuritySchemeType.Http
+    });
+});
+
+
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -88,6 +123,14 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+//Modulo API - Middleware para utilizar Swagger
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 
 app.MapControllerRoute(
     name: "default",

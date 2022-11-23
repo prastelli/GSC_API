@@ -25,7 +25,16 @@ namespace GSC_API.DataAccess
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            var thing = _context.Things.Find(id);
+
+            if (thing == null)
+            {
+                return false;
+            }
+            _context.Things.Remove(thing);
+            _context.SaveChanges();
+
+            return true;
         }
 
         public List<Thing> GetAll()
@@ -50,7 +59,7 @@ namespace GSC_API.DataAccess
 
         public void Update(Thing entity)
         {
-               _context.Entry(entity).State = EntityState.Modified;
+            _context.Entry(entity).State = EntityState.Modified;
             _context.SaveChanges();
         }
     }
