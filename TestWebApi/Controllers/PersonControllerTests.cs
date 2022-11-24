@@ -5,7 +5,9 @@ using GSC_API.Dto;
 using GSC_API.Entities;
 using GSC_API.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Controller;
 using Moq;
+using NuGet.Protocol.Core.Types;
 
 namespace TestWebApi.Controllers
 {
@@ -90,6 +92,17 @@ namespace TestWebApi.Controllers
             Assert.NotNull(personResult);
             Assert.IsNotType<ActionResult<PersonDto>>(personResult);
             Assert.IsType<ActionResult<Person>>(personResult);
+        }
+
+        [Fact]
+        public void DeletePerson()
+        {
+            //arrange
+            var DeletedId = 5;
+            var personController = new PersonController(_mockRepo.Object, _mapper);
+            personController.DeletePerson(DeletedId);
+
+            _mockRepo.Verify(v => v.Delete(DeletedId), Times.Once());
         }
 
         private List<Person> GetPersonsData()

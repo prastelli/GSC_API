@@ -65,8 +65,8 @@ namespace GSC_API.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = _userRepository.GetById(id);
-                user = _mapper.Map<User>(entity);
+                //var user = _userRepository.GetById(id);
+                var user = _mapper.Map<User>(entity);
                 _userRepository.Update(user);
 
                 return RedirectToAction(nameof(Index));
