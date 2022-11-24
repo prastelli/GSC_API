@@ -80,8 +80,8 @@ namespace GSC_API.Utils
             CreateMap<Rol, RolDTO>().ReverseMap();
             CreateMap<Rol, RolDTO>();
 
-            CreateMap<User, UserDto>().ReverseMap();
-            CreateMap<User, UserDto>();
+            CreateMap<User, UserViewModel>().ReverseMap();
+            CreateMap<User, UserViewModel>();
         }
     }
 }

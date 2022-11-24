@@ -23,6 +23,7 @@ builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IThingRepository, ThingRepository>();
 builder.Services.AddScoped<IRolRepository, RolRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddDbContext<LoanDBContext>(options =>
 {

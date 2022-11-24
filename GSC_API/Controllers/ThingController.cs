@@ -24,7 +24,7 @@ namespace GSC_API.Controllers
             return View(thingviewmodel);
             
         }
-        public IActionResult Create() //Que raro que es este controller verdad?
+        public IActionResult Create()
         {
             ViewBag.categories = _categoryRepository.GetListItems();
             return View();
